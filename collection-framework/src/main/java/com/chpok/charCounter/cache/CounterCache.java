@@ -6,6 +6,10 @@ import java.util.LinkedHashMap;
 public class CounterCache {
     private final ArrayList<CacheElement> countedSentences = new ArrayList<>();
     
+    public ArrayList<CacheElement> getCountedSentences() {
+        return countedSentences;
+    }
+
     public void addCountedSentence(String sentence, LinkedHashMap<Character, Integer> counter) {
         countedSentences.add(new CacheElement(sentence, counter));
     }

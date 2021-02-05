@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 
 public class CharCounterProviderImpl implements CharCounterProvider{
     @Override
-    public LinkedHashMap<Character, Integer> countUniqueCharacters(String sentence) {
+    public LinkedHashMap<Character, Integer> provideCharCount(String sentence) {
         LinkedHashMap<Character, Integer> result = new LinkedHashMap<>();
         
         for (int i = 0; i < sentence.length(); i++) {

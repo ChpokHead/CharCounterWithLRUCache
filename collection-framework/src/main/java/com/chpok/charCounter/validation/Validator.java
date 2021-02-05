@@ -4,7 +4,7 @@ public class Validator implements ValidationProvider{
     @Override
     public void validate(String sentence) {
         if (sentence == null) {
-            throw new IllegalArgumentException("Sentence is null");
+            throw new IllegalArgumentException("Sentence is null!");
         }
         
         if (sentence.isEmpty()) {
@@ -12,7 +12,7 @@ public class Validator implements ValidationProvider{
         }
         
         if (sentence.trim().isEmpty()) {
-            throw new IllegalArgumentException("Sentence contains only spaces or tabs");
+            throw new IllegalArgumentException("Sentence contains only spaces or tabs!");
         }
     }
     

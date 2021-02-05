@@ -10,12 +10,13 @@ public class UniqueCharCounterWithCache {
     private final ValidationProvider validationProvider;
     private final CharCounterProvider charCounterProvider;
     private final CharCounterViewProvider charCounterViewProvider;
-    private final CounterCache cache = new CounterCache();
+    private final CounterCache cache;
 
     public UniqueCharCounterWithCache(ValidationProvider validationProvider, CharCounterProvider charCounterProvider, CharCounterViewProvider charCounterViewProvider) {
         this.validationProvider = validationProvider;
         this.charCounterProvider = charCounterProvider;
         this.charCounterViewProvider = charCounterViewProvider;
+        cache = new CounterCache();
     }
     
     public String countUniqueCharacters(String sentence) {
@@ -23,10 +24,10 @@ public class UniqueCharCounterWithCache {
         
         LinkedHashMap<Character, Integer> result;
         
-        if (cache.isSentenceAlreadyCounted(sentence) ) {
+        if (cache.isSentenceAlreadyCounted(sentence)) {
             result = cache.getAlreadyCountedSentenceCounter(sentence);
         } else {
-            result = charCounterProvider.countUniqueCharacters(sentence);
+            result = charCounterProvider.provideCharCount(sentence);
             cache.addCountedSentence(sentence, result);
         }
         
