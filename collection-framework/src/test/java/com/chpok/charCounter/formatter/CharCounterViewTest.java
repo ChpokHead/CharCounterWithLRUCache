@@ -1,8 +1,6 @@
 package com.chpok.charCounter.formatter;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.LinkedHashMap;
 import org.junit.jupiter.api.Test;
@@ -12,7 +10,7 @@ class CharCounterViewTest {
     
     @Test
     void provideViewShouldReturnCorrectViewIfCountResultIsCorrect() {
-        LinkedHashMap<Character, Integer> countResult = new LinkedHashMap<>();
+        final LinkedHashMap<Character, Integer> countResult = new LinkedHashMap<>();
         
         countResult.put('h', 2);
         countResult.put('i', 1);
@@ -24,10 +22,10 @@ class CharCounterViewTest {
         countResult.put('s', 1);
         countResult.put('.', 3);
         
-        String expected = "\"h\" - 2\n\"i\" - 1\n\" \" - 1\n\"t\" - 1\n\"a\" - 1\n\"n\" - 1\n\"k\" - 1\n\"s\" - 1\n\".\" - 3\n";
-        String actual = viewProvider.provideView(countResult);
+        final String expected = "\"h\" - 2\n\"i\" - 1\n\" \" - 1\n\"t\" - 1\n\"a\" - 1\n\"n\" - 1\n\"k\" - 1\n\"s\" - 1\n\".\" - 3\n";
+        final String actual = viewProvider.provideView(countResult);
         
-        assertThat(actual, is(equalTo(expected)));
+        assertThat(actual).isEqualTo(expected);
     }
 
 }

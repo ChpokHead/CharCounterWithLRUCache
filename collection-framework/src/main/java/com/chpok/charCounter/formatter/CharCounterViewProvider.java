@@ -1,7 +1,7 @@
 package com.chpok.charCounter.formatter;
 
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 public interface CharCounterViewProvider {
-    String provideView(LinkedHashMap<Character, Integer> countResult);
+    String provideView(Map<Character, Integer> characterToCount);
 }

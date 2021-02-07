@@ -1,10 +1,7 @@
 package com.chpok.charCounter.validation;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,32 +10,17 @@ class ValidatorTest {
     
     @Test
     void validateShouldThrowIllegalArgumentExceptionIfSentenceIsNull() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(null));
-        
-        String expected = "Sentence is null!";
-        String actual = exception.getMessage();
-        
-        assertThat(actual, is(equalTo(expected)));
+        assertThatThrownBy(() -> validator.validate(null)).isInstanceOf(IllegalArgumentException.class).hasMessage("Sentence is null!");
     }
     
     @Test
-    void validateShouldThrowIllegalArgumentExceptionIfSentenceIsEmpty() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(""));
-        
-        String expected = "Sentence is empty!";
-        String actual = exception.getMessage();
-        
-        assertThat(actual, is(equalTo(expected)));
+    void validateShouldThrowIllegalArgumentExceptionIfSentenceIsEmpty() {        
+        assertThatThrownBy(() -> validator.validate("")).isInstanceOf(IllegalArgumentException.class).hasMessage("Sentence is empty!");
     }
 
     @Test
     void validateShouldThrowIllegalArgumentExceptionIfSentenceContainsOnlyTabsOrSpaces() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> validator.validate("   "));
-        
-        String expected = "Sentence contains only spaces or tabs!";
-        String actual = exception.getMessage();
-        
-        assertThat(actual, is(equalTo(expected)));
+        assertThatThrownBy(() -> validator.validate("  ")).isInstanceOf(IllegalArgumentException.class).hasMessage("Sentence contains only spaces or tabs!");
     }
     
     @Test

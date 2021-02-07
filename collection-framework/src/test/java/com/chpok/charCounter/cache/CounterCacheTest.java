@@ -1,47 +1,42 @@
 package com.chpok.charCounter.cache;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import org.junit.jupiter.api.Test;
 
 class CounterCacheTest {
-    private final CounterCache cache = new CounterCache();
+    private final CounterCacheProviderImpl cache = new CounterCacheProviderImpl();
     
     @Test
     void addCountedSentenceShouldAddCacheElementInCountedSentences() {
-        String sentence = "how are you?";
-        LinkedHashMap<Character, Integer> counter = new LinkedHashMap<>();
+        final String sentence = "how are you?";
+        final LinkedHashMap<Character, Integer> characterToCount = new LinkedHashMap<>();
         
-        counter.put('h', 1);
-        counter.put('o', 2);
-        counter.put('w', 1);
-        counter.put(' ', 2);
-        counter.put('a', 1);
-        counter.put('r', 1);
-        counter.put('e', 1);
-        counter.put('y', 1);
-        counter.put('u', 1);
-        counter.put('?', 1);
+        characterToCount.put('h', 1);
+        characterToCount.put('o', 2);
+        characterToCount.put('w', 1);
+        characterToCount.put(' ', 2);
+        characterToCount.put('a', 1);
+        characterToCount.put('r', 1);
+        characterToCount.put('e', 1);
+        characterToCount.put('y', 1);
+        characterToCount.put('u', 1);
+        characterToCount.put('?', 1);
         
-        cache.addCountedSentence(sentence, counter);
+        cache.addCountedSentence(sentence, characterToCount);
         
-        ArrayList<CacheElement> actual = cache.getCountedSentences();
-        ArrayList<CacheElement> expected = new ArrayList<>();
+        final LRUCache actual = cache.getCountedSentences();
+        final LRUCache expected = new LRUCache(cache.getCacheSize());
         
-        expected.add(new CacheElement(sentence, counter));
+        expected.put(sentence, characterToCount);
         
-        assertThat(actual, is(equalTo(expected)));
+        assertThat(actual).isEqualTo(expected);
     }
     
     @Test
     void getAlreadyCountedSentenceCounterShouldReturnCorrectCounterIfSentenceWasCounted() {
-        String sentence = "how are you?";
+        final String sentence = "how are you?";
         LinkedHashMap<Character, Integer> expected = new LinkedHashMap<>();
         
         expected.put('h', 1);
@@ -57,46 +52,46 @@ class CounterCacheTest {
         
         cache.addCountedSentence(sentence, expected);
         
-        LinkedHashMap<Character, Integer> actual = cache.getAlreadyCountedSentenceCounter(sentence);
+        final LinkedHashMap<Character, Integer> actual = cache.getAlreadyCountedSentenceCounter(sentence);
         
-        assertThat(actual, is(equalTo(expected)));
+        assertThat(actual).isEqualTo(expected);
     }
     
     @Test
     void getAlreadyCountedSentenceCounterShouldReturnNullIfSentenceWasNeverCounted() {
-        String sentence = "how are you?";
-        LinkedHashMap<Character, Integer> expected = null;        
-        LinkedHashMap<Character, Integer> actual = cache.getAlreadyCountedSentenceCounter(sentence);
+        final String sentence = "how are you?";
+        final LinkedHashMap<Character, Integer> expected = null;        
+        final LinkedHashMap<Character, Integer> actual = cache.getAlreadyCountedSentenceCounter(sentence);
         
-        assertThat(actual, is(equalTo(expected)));
+        assertThat(actual).isEqualTo(expected);
     }
     
     @Test
     void isSentenceAlreadyCountedShouldReturnTrueIfSentenceWasCounted() {
-        String sentence = "how are you?";
-        LinkedHashMap<Character, Integer> counter = new LinkedHashMap<>();
+        final String sentence = "how are you?";
+        final LinkedHashMap<Character, Integer> characterToCount = new LinkedHashMap<>();
         
-        counter.put('h', 1);
-        counter.put('o', 2);
-        counter.put('w', 1);
-        counter.put(' ', 2);
-        counter.put('a', 1);
-        counter.put('r', 1);
-        counter.put('e', 1);
-        counter.put('y', 1);
-        counter.put('u', 1);
-        counter.put('?', 1);
+        characterToCount.put('h', 1);
+        characterToCount.put('o', 2);
+        characterToCount.put('w', 1);
+        characterToCount.put(' ', 2);
+        characterToCount.put('a', 1);
+        characterToCount.put('r', 1);
+        characterToCount.put('e', 1);
+        characterToCount.put('y', 1);
+        characterToCount.put('u', 1);
+        characterToCount.put('?', 1);
         
-        cache.addCountedSentence(sentence, counter);
+        cache.addCountedSentence(sentence, characterToCount);
         
-        assertTrue(cache.isSentenceAlreadyCounted(sentence));
+        assertThat(cache.isSentenceAlreadyCounted(sentence)).isTrue();
     }
     
     @Test
     void isSentenceAlreadyCountedShouldReturnFalseIfSentenceWasNeverCounted() {
-        String sentence = "how are you?";
+        final String sentence = "how are you?";
         
-        assertFalse(cache.isSentenceAlreadyCounted(sentence));
+        assertThat(cache.isSentenceAlreadyCounted(sentence)).isFalse();
     }
 
 }

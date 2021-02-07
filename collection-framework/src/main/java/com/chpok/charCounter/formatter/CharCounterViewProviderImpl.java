@@ -1,7 +1,6 @@
 package com.chpok.charCounter.formatter;
 
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.Map;
 
 public class CharCounterViewProviderImpl implements CharCounterViewProvider{
     private static final String QUOTE = "\"";
@@ -10,13 +9,10 @@ public class CharCounterViewProviderImpl implements CharCounterViewProvider{
     private static final String NEWLINE = "\n";
     
     @Override
-    public String provideView(LinkedHashMap<Character, Integer> countResult) {
-        StringBuilder builder = new StringBuilder();
-        Set<Character> keys = countResult.keySet();
+    public String provideView(Map<Character, Integer> characterToCount) {
+        final StringBuilder builder = new StringBuilder();
         
-        for (Character sym : keys) {
-            builder.append(QUOTE + sym + QUOTE + SPACE + DASH + SPACE + countResult.get(sym) + NEWLINE);
-        }
+        characterToCount.forEach((sym, count) -> builder.append(QUOTE + sym + QUOTE + SPACE + DASH + SPACE + count + NEWLINE));
         
         return builder.toString();
     }

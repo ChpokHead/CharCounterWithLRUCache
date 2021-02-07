@@ -5,23 +5,19 @@ import java.util.LinkedHashMap;
 public class CharCounterProviderImpl implements CharCounterProvider{
     @Override
     public LinkedHashMap<Character, Integer> provideCharCount(String sentence) {
-        LinkedHashMap<Character, Integer> result = new LinkedHashMap<>();
+        final LinkedHashMap<Character, Integer> characterToCount = new LinkedHashMap<>();
         
         for (int i = 0; i < sentence.length(); i++) {
             char sym = sentence.charAt(i);
             
-            addCharacterToCounter(sym, result);
+            addCharacterToCounter(sym, characterToCount);
         }
         
-        return result;
+        return characterToCount;
     }
     
-    private void addCharacterToCounter(char sym, LinkedHashMap<Character, Integer> counter) {
-        if (counter.containsKey(sym)) {
-            counter.put(sym, counter.get(sym) + 1);
-        } else {
-            counter.put(sym, 1);
-        }
+    private void addCharacterToCounter(char sym, LinkedHashMap<Character, Integer> characterToCount) {
+        characterToCount.merge(sym, 1, (prev, one) -> prev + one);
     }
 
 }
