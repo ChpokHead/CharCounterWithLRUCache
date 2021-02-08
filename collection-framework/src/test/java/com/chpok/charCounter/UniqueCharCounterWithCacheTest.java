@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doThrow;
 
 import java.util.LinkedHashMap;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.chpok.charCounter.cache.CounterCacheProvider;
@@ -26,17 +26,8 @@ class UniqueCharCounterWithCacheTest {
     private ValidationProvider validator;
     @Mock
     private CounterCacheProvider cache;
+    @InjectMocks
     private UniqueCharCounterWithCache charCounterWithCache;
-
-    @BeforeEach
-    void setUp() {
-        charCounterWithCache = UniqueCharCounterWithCache.builder()
-                                                         .withValidation(validator)
-                                                         .withCharCounter(counterProvider)
-                                                         .withCharCounterView(viewProvider)
-                                                         .withCounterCache(cache)
-                                                         .build();
-    }
 
     @Test
     void countUniqueCharactersShouldReturnCorrectCharacterCountIfSentenceIsCorrect() {

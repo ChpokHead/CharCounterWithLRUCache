@@ -11,13 +11,7 @@ public class CharCounterConsoleApplication {
         CharCounterProviderImpl charCounter = new CharCounterProviderImpl();
         CharCounterViewProviderImpl viewProvider = new CharCounterViewProviderImpl();
         CounterCacheProviderImpl cache = new CounterCacheProviderImpl();
-        
-        UniqueCharCounterWithCache counter = UniqueCharCounterWithCache.builder()
-                                                                       .withValidation(validator)
-                                                                       .withCharCounter(charCounter)
-                                                                       .withCharCounterView(viewProvider)
-                                                                       .withCounterCache(cache)
-                                                                       .build();
+        UniqueCharCounterWithCache counter = new UniqueCharCounterWithCache(validator, charCounter, viewProvider, cache);
         
         System.out.println(counter.countUniqueCharacters("hello world!"));
     }

@@ -12,18 +12,15 @@ public class UniqueCharCounterWithCache {
     private final CharCounterProvider charCounterProvider;
     private final CharCounterViewProvider charCounterViewProvider;
     private final CounterCacheProvider counterCacheProvider;
+    
+    public UniqueCharCounterWithCache(ValidationProvider validationProvider, CharCounterProvider charCounterProvider,
+            CharCounterViewProvider charCounterViewProvider, CounterCacheProvider counterCacheProvider) {
+        this.validationProvider = validationProvider;
+        this.charCounterProvider = charCounterProvider;
+        this.charCounterViewProvider = charCounterViewProvider;
+        this.counterCacheProvider = counterCacheProvider;
+    }
 
-    public UniqueCharCounterWithCache(Builder builder) {
-        validationProvider = builder.validationProvider;
-        charCounterProvider = builder.charCounterProvider;
-        charCounterViewProvider = builder.charCounterViewProvider;
-        counterCacheProvider = builder.counterCacheProvider;
-    }
-    
-    public static Builder builder() {
-        return new Builder();
-    }
-    
     public String countUniqueCharacters(String sentence) {
         validationProvider.validate(sentence);
         
@@ -39,36 +36,4 @@ public class UniqueCharCounterWithCache {
         return charCounterViewProvider.provideView(characterToCount);
     }
     
-    public static class Builder {
-        private ValidationProvider validationProvider;
-        private CharCounterProvider charCounterProvider;
-        private CharCounterViewProvider charCounterViewProvider;
-        private CounterCacheProvider counterCacheProvider;
-        
-        private Builder() {}
-        
-        public Builder withValidation(ValidationProvider validationProvider) {
-            this.validationProvider = validationProvider;
-            return this;
-        }
-        
-        public Builder withCharCounter(CharCounterProvider charCounterProvider) {
-            this.charCounterProvider = charCounterProvider;
-            return this;
-        }
-        
-        public Builder withCharCounterView(CharCounterViewProvider charCounterViewProvider) {
-            this.charCounterViewProvider = charCounterViewProvider;
-            return this;
-        }
-        
-        public Builder withCounterCache(CounterCacheProvider counterCacheProvider) {
-            this.counterCacheProvider = counterCacheProvider;
-            return this;
-        }
-        
-        public UniqueCharCounterWithCache build() {
-            return new UniqueCharCounterWithCache(this);
-        }
-    }
 }
