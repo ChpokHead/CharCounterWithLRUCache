@@ -2,10 +2,12 @@ package com.chpok.charCounter.cache;
 
 import java.util.LinkedHashMap;
 
-public class CounterCacheProviderImpl implements CounterCacheProvider{
-    private static final int CACHE_SIZE = 100;
-   
-    private final LRUCache cache = new LRUCache(CACHE_SIZE);
+public class CounterCacheProviderImpl implements CounterCacheProvider{   
+    private final LRUCache cache;
+    
+    public CounterCacheProviderImpl(LRUCache cache) {
+        this.cache = cache;
+    }
     
     public LRUCache getCountedSentences() {
         return cache;
@@ -23,10 +25,6 @@ public class CounterCacheProviderImpl implements CounterCacheProvider{
     
     public boolean isSentenceAlreadyCounted(String sentence) {
         return cache.containsKey(sentence);
-    }
-    
-    public int getCacheSize() {
-        return CACHE_SIZE;
     }
     
 }

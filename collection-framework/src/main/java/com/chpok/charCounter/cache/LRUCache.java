@@ -2,6 +2,7 @@ package com.chpok.charCounter.cache;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class LRUCache extends LinkedHashMap<String, LinkedHashMap<Character, Integer>>{
     private final int maxSize;
@@ -15,4 +16,5 @@ public class LRUCache extends LinkedHashMap<String, LinkedHashMap<Character, Int
     protected boolean removeEldestEntry(Map.Entry<String, LinkedHashMap<Character, Integer>> eldest) {
         return this.size() > maxSize;
     }
+    
 }
